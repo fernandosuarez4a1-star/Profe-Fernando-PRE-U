@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0F2942" />
+  <meta name="description" content="Profe Fernando PRE-U - Simulador Oficial de Examen de Ingreso a la Universidad y Certificación Académica." />
+
+  <!-- Compatibilidad PWA iOS / Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Profe Fernando PRE-U" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230F2942'/%3E%3Crect x='24' y='24' width='464' height='464' rx='76' fill='none' stroke='%23B48327' stroke-width='14'/%3E%3Cpolygon points='256,110 420,185 256,260 92,185' fill='%23FFFFFF'/%3E%3Cpath d='M152,222 L152,300 C152,332 360,332 360,300 L360,222 L256,270 Z' fill='%23B48327'/%3E%3Cline x1='404' y1='192' x2='404' y2='305' stroke='%23B48327' stroke-width='12' stroke-linecap='round'/%3E%3Ccircle cx='404' cy='312' r='12' fill='%23FFFFFF'/%3E%3Ctext x='256' y='425' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='64' fill='%23FFFFFF'%3EPRE-U%3C/text%3E%3C/svg%3E" />
+
+  <!-- Favicon SVG Institucional -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230F2942'/%3E%3Cpolygon points='32,12 54,22 32,32 10,22' fill='%23FFFFFF'/%3E%3Cpath d='M18,27 L18,38 C18,43 46,43 46,38 L46,27 L32,34 Z' fill='%23B48327'/%3E%3Ctext x='32' y='56' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='11' fill='%23FFFFFF'%3EPRE-U%3C/text%3E%3C/svg%3E" />
+
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Profe Fernando PRE-U | Simulador de Admisión Universitaria</title>
+</head>
+<body>
+  <!-- Contenedor global de notificaciones Toast -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- =========================================================
+       VISTA 1: PORTADA Y SELECCIÓN DE ENTORNO (ROLES)
+       ========================================================= -->
+  <section id="view-landing" class="view active">
+    <header class="institutional-topbar">
+      <div class="container topbar-inner">
+        <div class="brand-lockup">
+          <div class="brand-emblem" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="38" height="38">
+              <rect width="48" height="48" rx="8" fill="#1E4E79" stroke="#B48327" stroke-width="2" />
+              <polygon points="24,10 40,17 24,24 8,17" fill="#FFFFFF" />
+              <path d="M14,21 L14,29 C14,33 34,33 34,29 L34,21 L24,26 Z" fill="#B48327" />
+              <text x="24" y="42" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="700" font-size="8.5" fill="#FFFFFF">PRE-U</text>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">Profe Fernando PRE-U</h1>
+            <p class="brand-subtitle">Plataforma Oficial de Simulación y Certificación Preuniversitaria</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-install-pwa" class="btn btn-gold hidden" type="button">
+            Instalar App
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container landing-main">
+      <div class="landing-intro-banner">
+        <span class="badge-institutional">SIMULADOR OFICIAL DE ADMISIÓN UNIVERSITARIA</span>
+        <h2>Preparación Académica de Alto Rendimiento</h2>
+        <p>
+          Evalúa tus conocimientos en los <strong>11 temas fundamentales</strong> de Matemáticas, Lógica y Razonamiento Abstracto,
+          obtén certificaciones oficiales por tema culminado y pon a prueba tu nivel en el <strong>Desafío Final de 70 preguntas</strong>.
+        </p>
+      </div>
+
+      <div class="roles-grid">
+        <!-- Tarjeta Entorno Estudiante -->
+        <article class="role-card">
+          <div class="role-card-header student-header">
+            <span class="role-tag">ACCESO ACADÉMICO</span>
+            <h3>Entorno Estudiante</h3>
+            <p>Ingresa con tu Nombre y Apellido para rendir tus simulacros y obtener tus certificados.</p>
+          </div>
+          <div class="role-card-body">
+            <form id="form-student-login" novalidate>
+              <div class="form-group">
+                <label for="input-student-name">Nombre y Apellido del Postulante <span class="required">*</span></label>
+                <input
+                  type="text"
+                  id="input-student-name"
+                  class="form-control"
+                  placeholder="Ej: María Fernanda López"
+                  autocomplete="name"
+                  required
+                />
+                <small class="form-hint">
+                  Escribe al menos un nombre y un apellido. Cada nivel y el Desafío Final cuentan con <strong>1 solo intento oficial</strong> por estudiante.
+                </small>
+                <p id="student-login-error" class="form-error hidden"></p>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                Ingresar al Simulador Preuniversitario
+              </button>
+            </form>
+
+            <div id="recent-students-box" class="recent-students-box hidden">
+              <p class="recent-label">Estudiantes registrados en este dispositivo:</p>
+              <div id="recent-students-list" class="recent-chips"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tarjeta Entorno Profesor -->
+        <article class="role-card">
+          <div class="role-card-header teacher-header">
+            <span class="role-tag">GESTIÓN DOCENTE</span>
+            <h3>Entorno Profesor</h3>
+            <p>Administra el banco de preguntas, importa/exporta reactivos y supervisa el progreso estudiantil.</p>
+          </div>
+          <div class="role-card-body">
+            <form id="form-teacher-login" novalidate>
+              <div class="form-group">
+                <label for="input-teacher-pin">PIN de Acceso Docente <span class="required">*</span></label>
+                <input
+                  type="password"
+                  id="input-teacher-pin"
+                  class="form-control"
+                  placeholder="Ingresa PIN (por defecto: 1234)"
+                  maxlength="12"
+                  required
+                />
+                <small class="form-hint">
+                  Acceso restringido para docentes autorizados de Profe Fernando PRE-U.
+                </small>
+                <p id="teacher-login-error" class="form-error hidden"></p>
+              </div>
+              <button type="submit" class="btn btn-navy btn-block">
+                Acceder al Panel Docente
+              </button>
+            </form>
+
+            <div class="syllabus-quick-summary">
+              <h4>Estructura del Programa:</h4>
+              <ul>
+                <li><strong>11 Temas Oficiales:</strong> Básico (5), Medio (10) y Difícil (20).</li>
+                <li><strong>Certificación Automática:</strong> Al culminar los 3 niveles de cada tema.</li>
+                <li><strong>Desafío Final:</strong> 70 preguntas integradoras en 75 minutos.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer class="institutional-footer">
+      <div class="container">
+        <p>Profe Fernando PRE-U · Sistema de Evaluación y Certificación Preuniversitaria · Funciona 100% Offline</p>
+      </div>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       VISTA 2: PANEL DEL ESTUDIANTE (PROGRESO, TEMARIO Y CERTIFICADOS)
+       ========================================================= -->
+  <section id="view-student" class="view hidden">
+    <header class="institutional-topbar">
+      <div class="container topbar-inner">
+        <div class="brand-lockup">
+          <div class="brand-emblem">
+            <svg viewBox="0 0 48 48" width="34" height="34">
+              <rect width="48" height="48" rx="8" fill="#1E4E79" stroke="#B48327" stroke-width="2" />
+              <polygon points="24,10 40,17 24,24 8,17" fill="#FFFFFF" />
+              <path d="M14,21 L14,29 C14,33 34,33 34,29 L34,21 L24,26 Z" fill="#B48327" />
+            </svg>
+          </div>
+          <div>
+            <span class="brand-title-sm">Profe Fernando PRE-U</span>
+            <p class="student-greeting">Postulante: <strong id="header-student-name">—</strong></p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-student-logout" class="btn btn-outline-light" type="button">
+            Cambiar Estudiante / Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container student-dashboard-main">
+      <!-- Resumen KPI del Estudiante -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <span class="kpi-label">Niveles Completados</span>
+          <strong id="kpi-levels-done" class="kpi-value">0 / 33</strong>
+          <span class="kpi-sub">11 temas × 3 niveles</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Temas Certificados</span>
+          <strong id="kpi-topics-certified" class="kpi-value">0 / 11</strong>
+          <span class="kpi-sub">Diplomas emitidos</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Promedio General</span>
+          <strong id="kpi-avg-score" class="kpi-value">0 pts</strong>
+          <span class="kpi-sub">Escala sobre 1000 pts</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">Desafío Final (70 preg.)</span>
+          <strong id="kpi-final-status" class="kpi-value">Pendiente</strong>
+          <span id="kpi-final-sub" class="kpi-sub">1 intento oficial</span>
+        </div>
+      </div>
+
+      <!-- Navegación interna de pestañas -->
+      <div class="tabs-bar" role="tablist">
+        <button class="tab-btn active" data-student-tab="temario" role="tab" aria-selected="true">
+          Temario Oficial (11 Temas) y Desafío Final
+        </button>
+        <button class="tab-btn" data-student-tab="certificados" role="tab" aria-selected="false">
+          Mis Certificaciones (<span id="tab-cert-count">0</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: TEMARIO Y DESAFÍO FINAL -->
+      <div id="student-tab-temario" class="student-tab-panel active">
+        <div class="rules-notice-bar">
+          <strong>Reglas de Evaluación:</strong>
+          <span><strong>Básico:</strong> 5 preg. (sin límite de tiempo)</span> ·
+          <span><strong>Medio:</strong> 10 preg. (15 min / 90s por preg.)</span> ·
+          <span><strong>Difícil:</strong> 20 preg. (15 min / 45s por preg.)</span> ·
+          <span><strong>Intento único por nivel.</strong></span>
+        </div>
+
+        <!-- Bloque 1: Matemáticas y Lógica -->
+        <div class="block-section">
+          <div class="block-header">
+            <span class="block-badge">BLOQUE 1</span>
+            <h2>Matemáticas y Lógica (Temas 1 al 7)</h2>
+          </div>
+          <div id="topics-block-1" class="topics-grid"></div>
+        </div>
+
+        <!-- Bloque 2: Razonamiento Abstracto -->
+        <div class="block-section">
+          <div class="block-header">
+            <span class="block-badge block-badge-alt">BLOQUE 2</span>
+            <h2>Razonamiento Abstracto (Temas 8 al 11 — Figuras SVG)</h2>
+          </div>
+          <div id="topics-block-2" class="topics-grid"></div>
+        </div>
+
+        <!-- Desafío Final Integrador -->
+        <div class="final-challenge-card" id="final-challenge-container">
+          <div class="final-challenge-badge">SIMULACRO GENERAL DE INGRESO A LA UNIVERSIDAD</div>
+          <div class="final-challenge-content">
+            <div class="final-challenge-info">
+              <h2>Desafío Final Integrador — Examen Completo de Admisión</h2>
+              <p>
+                Evaluación integral que abarca los <strong>11 temas del programa</strong> (~45 preguntas de Matemáticas y Lógica y ~25 preguntas de Razonamiento Abstracto con gráficos SVG).
+                Al finalizar recibirás el desglose detallado por tema y tu <strong>Certificación General de Simulacro Universitario</strong>.
+              </p>
+              <div class="final-specs">
+                <span class="spec-pill">70 Preguntas Integradoras</span>
+                <span class="spec-pill">75 Minutos (01:15:00)</span>
+                <span class="spec-pill">Escala 1000 Puntos</span>
+                <span class="spec-pill">1 Solo Intento Oficial</span>
+              </div>
+            </div>
+            <div class="final-challenge-action" id="final-challenge-action-box">
+              <!-- Renderizado dinámicamente por app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: GALERÍA DE CERTIFICACIONES -->
+      <div id="student-tab-certificados" class="student-tab-panel hidden">
+        <div class="certificates-header-info">
+          <h3>Galería Oficial de Certificaciones Obtenidas</h3>
+          <p>
+            Cada vez que culminas los <strong>3 niveles (Básico, Medio y Difícil)</strong> de un tema, se emite automáticamente su certificación oficial.
+            También obtienes una certificación general al culminar el <strong>Desafío Final</strong>.
+          </p>
+        </div>
+        <div id="certificates-gallery" class="certificates-grid"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- =========================================================
+       VISTA 3: SIMULADOR OFICIAL DE EXAMEN
+       ========================================================= -->
+  <section id="view-exam" class="view hidden">
+    <!-- Barra Superior Fija del Simulador -->
+    <header class="exam-fixed-bar" id="exam-topbar">
+      <div class="container exam-topbar-inner">
+        <div class="exam-meta-left">
+          <span class="exam-student-pill" id="exam-student-label">Estudiante</span>
+          <div class="exam-title-group">
+            <strong id="exam-topic-title">Tema</strong>
+            <span id="exam-level-badge" class="exam-level-tag">Nivel Básico</span>
+          </div>
+        </div>
+
+        <div class="exam-meta-center">
+          <span class="exam-progress-counter" id="exam-question-counter">Pregunta 1 de 5</span>
+        </div>
+
+        <div class="exam-meta-right">
+          <div id="exam-timer-box" class="exam-timer-box">
+            <span class="timer-label" id="exam-timer-mode-label">TIEMPO</span>
+            <span class="timer-digits" id="exam-timer-display">00:00</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Alerta de tiempo crítico -->
+    <div id="exam-time-warning-banner" class="exam-time-warning hidden" role="alert">
+      <span id="exam-time-warning-text">Atención: Queda poco tiempo para finalizar la prueba.</span>
+    </div>
+
+    <main class="container exam-workspace">
+      <!-- Columna Principal: Tarjeta de Pregunta -->
+      <div class="exam-question-column">
+        <article class="question-card">
+          <div class="question-card-header">
+            <span id="q-number-badge" class="q-number-badge">Pregunta #1</span>
+            <span id="q-topic-origin-badge" class="q-origin-badge hidden">Tema</span>
+            <button id="btn-flag-question" type="button" class="btn-flag">
+              Marcar para revisar
+            </button>
+          </div>
+
+          <div id="q-prompt-text" class="question-prompt">
+            Enunciado de la pregunta...
+          </div>
+
+          <div id="q-svg-container" class="question-svg-box hidden">
+            <!-- Gráfico SVG inline renderizado aquí -->
+          </div>
+
+          <div id="q-options-list" class="options-list" role="radiogroup" aria-label="Opciones de respuesta">
+            <!-- 4 opciones A, B, C, D -->
+          </div>
+        </article>
+
+        <!-- Barra de Navegación Inferior de la Pregunta -->
+        <div class="exam-nav-controls">
+          <button id="btn-prev-question" type="button" class="btn btn-secondary">
+            ← Anterior
+          </button>
+          <button id="btn-next-question" type="button" class="btn btn-primary">
+            Siguiente →
+          </button>
+          <button id="btn-submit-exam" type="button" class="btn btn-emerald">
+            Finalizar y Calificar Examen
+          </button>
+        </div>
+      </div>
+
+      <!-- Columna Lateral: Panel Navegador de Preguntas -->
+      <aside class="exam-navigator-column" aria-label="Navegador de preguntas">
+        <div class="navigator-card">
+          <div class="navigator-header">
+            <h3>Navegador de Preguntas</h3>
+            <span id="nav-answered-summary">0 / 0 respondidas</span>
+          </div>
+
+          <div class="navigator-legend">
+            <span><i class="dot dot-unanswered"></i> Sin responder</span>
+            <span><i class="dot dot-answered"></i> Respondida</span>
+            <span><i class="dot dot-flagged"></i> Revisar</span>
+          </div>
+
+          <div id="exam-navigator-grid" class="navigator-grid">
+            <!-- Botones 1..N -->
+          </div>
+
+          <div class="navigator-footer">
+            <button id="btn-submit-exam-side" type="button" class="btn btn-emerald btn-block">
+              Entregar Prueba
+            </button>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </section>
+
+  <!-- =========================================================
+       VISTA 4: RESULTADOS Y REVISIÓN PASO A PASO
+       ========================================================= -->
+  <section id="view-results" class="view hidden">
+    <header class="institutional-topbar">
+      <div class="container topbar-inner">
+        <div class="brand-lockup">
+          <div>
+            <span class="brand-title-sm">Profe Fernando PRE-U · Informe de Resultados</span>
+            <p class="student-greeting">Postulante: <strong id="res-student-name">—</strong></p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-results-back" type="button" class="btn btn-outline-light">
+            ← Volver al Panel del Estudiante
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container results-main">
+      <!-- Tarjeta de Puntaje Global -->
+      <div class="results-summary-card">
+        <div class="results-header-row">
+          <div>
+            <span id="res-mode-badge" class="badge-institutional">RESULTADO OFICIAL</span>
+            <h2 id="res-title">Tema — Nivel</h2>
+            <p id="res-subtitle" class="res-subtitle">Registro oficial guardado con intento único.</p>
+          </div>
+          <div class="score-box">
+            <span class="score-label">CALIFICACIÓN FINAL</span>
+            <strong id="res-score-1000" class="score-number">0</strong>
+            <span class="score-scale">/ 1000 puntos</span>
+          </div>
+        </div>
+
+        <div class="results-metrics-grid">
+          <div class="metric-item metric-correct">
+            <span class="metric-num" id="res-correct-count">0</span>
+            <span class="metric-lbl">Aciertos</span>
+          </div>
+          <div class="metric-item metric-incorrect">
+            <span class="metric-num" id="res-incorrect-count">0</span>
+            <span class="metric-lbl">Errores</span>
+          </div>
+          <div class="metric-item metric-unanswered">
+            <span class="metric-num" id="res-unanswered-count">0</span>
+            <span class="metric-lbl">Sin responder</span>
+          </div>
+          <div class="metric-item metric-time">
+            <span class="metric-num" id="res-time-taken">00:00</span>
+            <span class="metric-lbl">Tiempo empleado</span>
+          </div>
+        </div>
+
+        <!-- Banner de Certificado Desbloqueado (si aplica) -->
+        <div id="res-certificate-banner" class="cert-unlocked-banner hidden">
+          <div>
+            <strong id="res-cert-banner-title">¡Certificación Oficial Desbloqueada!</strong>
+            <p id="res-cert-banner-desc">Has completado satisfactoriamente los requisitos para obtener tu diploma oficial.</p>
+          </div>
+          <button id="btn-res-open-cert" type="button" class="btn btn-gold">
+            Ver / Imprimir Certificado
+          </button>
+        </div>
+      </div>
+
+      <!-- Desglose por los 11 Temas (Solo visible en Desafío Final) -->
+      <div id="res-final-breakdown-card" class="breakdown-card hidden">
+        <h3>Desglose de Rendimiento por Tema (11 Temas Evaluados)</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tema Evaluado</th>
+                <th>Bloque</th>
+                <th>Aciertos</th>
+                <th>Efectividad</th>
+              </tr>
+            </thead>
+            <tbody id="res-final-breakdown-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Revisión Paso a Paso -->
+      <div class="review-section">
+        <div class="review-header-bar">
+          <h3>Revisión Detallada Paso a Paso</h3>
+          <div class="review-filters">
+            <button type="button" class="filter-chip active" data-review-filter="all">Todas</button>
+            <button type="button" class="filter-chip" data-review-filter="incorrect">Incorrectas / Omitidas</button>
+            <button type="button" class="filter-chip" data-review-filter="correct">Correctas</button>
+          </div>
+        </div>
+        <div id="res-review-list" class="review-list"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- =========================================================
+       VISTA 5: CERTIFICADO OFICIAL IMPRIMIBLE (HOJA HORIZONTAL)
+       ========================================================= -->
+  <section id="view-certificate" class="view hidden">
+    <div class="cert-toolbar no-print">
+      <div class="container cert-toolbar-inner">
+        <button id="btn-cert-back" type="button" class="btn btn-secondary">
+          ← Volver
+        </button>
+        <div class="cert-toolbar-actions">
+          <button id="btn-print-certificate" type="button" class="btn btn-gold">
+            Descargar / Imprimir Certificado
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-stage">
+      <article id="printable-certificate" class="certificate-sheet">
+        <div class="cert-outer-border">
+          <div class="cert-inner-border">
+            <!-- Encabezado Institucional -->
+            <header class="cert-header">
+              <div class="cert-crest">
+                <svg viewBox="0 0 80 80" width="68" height="68">
+                  <circle cx="40" cy="40" r="37" fill="#0F2942" stroke="#B48327" stroke-width="3" />
+                  <polygon points="40,18 64,29 40,40 16,29" fill="#FFFFFF" />
+                  <path d="M25,35 L25,47 C25,53 55,53 55,47 L55,35 L40,42 Z" fill="#B48327" />
+                  <text x="40" y="67" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="10" fill="#FFFFFF">PRE-U</text>
+                </svg>
+              </div>
+              <div class="cert-institution-titles">
+                <span class="cert-kicker">INSTITUCIÓN ACADÉMICA DE PREPARACIÓN UNIVERSITARIA</span>
+                <h1 class="cert-institution-name">Profe Viron Preu</h1>
+                <p class="cert-program-sub">Programa Oficial de Simulación · <strong>Profe Fernando PRE-U</strong></p>
+              </div>
+            </header>
+
+            <!-- Cuerpo del Diploma -->
+            <div class="cert-body">
+              <h2 id="cert-doc-type" class="cert-doc-title">CERTIFICACIÓN OFICIAL DE CULMINACIÓN</h2>
+              <p class="cert-grant-text">Se otorga el presente certificado académico a:</p>
+
+              <div class="cert-student-name-box">
+                <span id="cert-student-fullname">Nombre y Apellido del Estudiante</span>
+              </div>
+
+              <p id="cert-formal-statement" class="cert-formal-statement">
+                Por haber culminado satisfactoriamente la práctica completa (niveles Básico, Medio y Difícil) correspondiente al tema oficial del programa preuniversitario.
+              </p>
+
+              <div class="cert-metrics-strip">
+                <div class="cert-metric-cell">
+                  <span class="cert-m-label">CALIFICACIÓN PROMEDIO</span>
+                  <strong id="cert-avg-score" class="cert-m-value">0 / 1000 puntos</strong>
+                </div>
+                <div class="cert-metric-cell">
+                  <span class="cert-m-label">DETALLE DE EVALUACIÓN</span>
+                  <strong id="cert-levels-detail" class="cert-m-value">Básico · Medio · Difícil</strong>
+                </div>
+                <div class="cert-metric-cell">
+                  <span class="cert-m-label">FECHA DE CULMINACIÓN</span>
+                  <strong id="cert-issue-date" class="cert-m-value">22/11/2026</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie de Certificado: Firmas y Sello Dorado -->
+            <footer class="cert-footer">
+              <div class="cert-signature-block">
+                <div class="signature-line"></div>
+                <strong>Prof. Fernando</strong>
+                <span>Dirección Académica · Profe Fernando PRE-U</span>
+              </div>
+
+              <!-- Sello Dorado Académico -->
+              <div class="cert-gold-seal" aria-label="Sello Oficial Dorado">
+                <svg viewBox="0 0 120 120" width="96" height="96">
+                  <circle cx="60" cy="60" r="54" fill="#B48327" />
+                  <circle cx="60" cy="60" r="47" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="4 3" />
+                  <circle cx="60" cy="60" r="40" fill="#0F2942" stroke="#B48327" stroke-width="2" />
+                  <text x="60" y="45" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="9" fill="#B48327">CERTIFICADO</text>
+                  <text x="60" y="63" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-size="13" fill="#FFFFFF">OFICIAL</text>
+                  <text x="60" y="79" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="8" fill="#B48327">PRE-U 1000 PTS</text>
+                </svg>
+              </div>
+
+              <div class="cert-validation-block">
+                <span class="val-label">CÓDIGO ÚNICO DE VALIDACIÓN</span>
+                <strong id="cert-validation-code" class="val-code">PFU-0000-0000</strong>
+                <span class="val-note">Registro Académico Verificado</span>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       VISTA 6: ENTORNO PROFESOR (GESTIÓN DOCENTE)
+       ========================================================= -->
+  <section id="view-teacher" class="view hidden">
+    <header class="institutional-topbar">
+      <div class="container topbar-inner">
+        <div class="brand-lockup">
+          <div>
+            <span class="brand-title-sm">Profe Fernando PRE-U · Panel Docente</span>
+            <p class="student-greeting">Administración Académica y Banco de Reactivos</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-teacher-logout" type="button" class="btn btn-outline-light">
+            Cerrar Sesión Docente
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container teacher-main">
+      <!-- Navegación Docente -->
+      <div class="tabs-bar" role="tablist">
+        <button class="tab-btn active" data-teacher-tab="estudiantes" role="tab">
+          Seguimiento de Estudiantes
+        </button>
+        <button class="tab-btn" data-teacher-tab="banco" role="tab">
+          Gestor de Banco de Preguntas
+        </button>
+        <button class="tab-btn" data-teacher-tab="json" role="tab">
+          Importar / Exportar (.json) y Seguridad
+        </button>
+      </div>
+
+      <!-- TAB DOCENTE 1: SEGUIMIENTO DE ESTUDIANTES -->
+      <div id="teacher-tab-estudiantes" class="teacher-tab-panel active">
+        <div class="panel-toolbar">
+          <div class="search-box">
+            <label for="teacher-student-search" class="sr-only">Buscar estudiante</label>
+            <input type="text" id="teacher-student-search" class="form-control" placeholder="Filtrar por Nombre y Apellido..." />
+          </div>
+          <div class="teacher-kpis-inline">
+            <span class="stat-pill">Estudiantes registrados: <strong id="teacher-total-students">0</strong></span>
+            <span class="stat-pill">Certificados emitidos: <strong id="teacher-total-certs">0</strong></span>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nombre y Apellido</th>
+                  <th>Niveles Completados</th>
+                  <th>Certificados Tema</th>
+                  <th>Promedio Temas</th>
+                  <th>Desafío Final</th>
+                  <th>Acciones Administrativas</th>
+                </tr>
+              </thead>
+              <tbody id="teacher-students-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB DOCENTE 2: GESTOR DE BANCO DE PREGUNTAS -->
+      <div id="teacher-tab-banco" class="teacher-tab-panel hidden">
+        <div class="panel-toolbar wrap-toolbar">
+          <div class="filters-inline">
+            <select id="teacher-filter-topic" class="form-control">
+              <!-- Opciones cargadas dinámicamente -->
+            </select>
+            <select id="teacher-filter-level" class="form-control">
+              <option value="basico">Nivel Básico (5 preg.)</option>
+              <option value="medio">Nivel Medio (10 preg.)</option>
+              <option value="dificil">Nivel Difícil (20 preg.)</option>
+            </select>
+          </div>
+          <button id="btn-open-new-question" type="button" class="btn btn-primary">
+            + Crear Nueva Pregunta
+          </button>
+        </div>
+
+        <div id="teacher-questions-summary" class="questions-count-bar"></div>
+        <div id="teacher-questions-list" class="teacher-questions-list"></div>
+      </div>
+
+      <!-- TAB DOCENTE 3: IMPORTAR / EXPORTAR JSON Y CONFIGURACIÓN -->
+      <div id="teacher-tab-json" class="teacher-tab-panel hidden">
+        <div class="json-tools-grid">
+          <div class="tool-card">
+            <h3>Exportar Banco de Preguntas (.json)</h3>
+            <p>Descarga una copia de seguridad completa con todos los 11 temas, niveles, gráficos SVG y preguntas personalizadas.</p>
+            <button id="btn-export-bank" type="button" class="btn btn-primary">
+              Descargar Banco Completo (.json)
+            </button>
+          </div>
+
+          <div class="tool-card">
+            <h3>Importar Paquete de Preguntas (.json)</h3>
+            <p>Carga un archivo <code>.json</code> previamente exportado para actualizar o compartir reactivos entre dispositivos.</p>
+            <input type="file" id="input-import-bank" accept=".json,application/json" class="form-control" />
+            <button id="btn-import-bank" type="button" class="btn btn-emerald mt-12">
+              Importar Archivo Seleccionado
+            </button>
+          </div>
+
+          <div class="tool-card">
+            <h3>Seguridad y Restauración</h3>
+            <p>Cambia el PIN de acceso docente o restaura el banco de preguntas original de fábrica.</p>
+            <div class="form-group">
+              <label for="input-new-pin">Nuevo PIN Docente (4-12 dígitos)</label>
+              <div class="inline-input-btn">
+                <input type="password" id="input-new-pin" class="form-control" placeholder="Nuevo PIN" maxlength="12" />
+                <button id="btn-update-pin" type="button" class="btn btn-navy">Guardar PIN</button>
+              </div>
+            </div>
+            <button id="btn-restore-default-bank" type="button" class="btn btn-crimson">
+              Restaurar Banco Original de Fábrica
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- =========================================================
+       MODALES DE INTERFAZ (CONFIRMACIÓN, DETALLE ESTUDIANTE, EDITOR PREGUNTA)
+       ========================================================= -->
+  <!-- Modal Genérico de Confirmación -->
+  <div id="modal-confirm" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-box modal-sm">
+      <div class="modal-header">
+        <h3 id="modal-confirm-title">Confirmar Acción</h3>
+      </div>
+      <div class="modal-body">
+        <p id="modal-confirm-message">¿Estás seguro?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-confirm-cancel" type="button" class="btn btn-secondary">Cancelar</button>
+        <button id="btn-confirm-accept" type="button" class="btn btn-primary">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detalle y Habilitación de Intentos de Estudiante (Docente) -->
+  <div id="modal-student-detail" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 id="modal-sd-title">Expediente Académico del Estudiante</h3>
+        <button type="button" class="modal-close" data-close-modal="modal-student-detail">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-sd-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-student-detail">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Crear / Editar Pregunta (Docente) -->
+  <div id="modal-question-editor" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <h3 id="modal-qe-title">Crear Nueva Pregunta</h3>
+        <button type="button" class="modal-close" data-close-modal="modal-question-editor">&times;</button>
+      </div>
+      <form id="form-question-editor">
+        <div class="modal-body">
+          <input type="hidden" id="qe-id" />
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="qe-topic">Tema o Desafío Final</label>
+              <select id="qe-topic" class="form-control" required></select>
+            </div>
+            <div class="form-group" id="qe-level-group">
+              <label for="qe-level">Nivel de Dificultad</label>
+              <select id="qe-level" class="form-control" required>
+                <option value="basico">Nivel Básico</option>
+                <option value="medio">Nivel Medio</option>
+                <option value="dificil">Nivel Difícil</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="qe-prompt">Enunciado de la Pregunta <span class="required">*</span></label>
+            <textarea id="qe-prompt" class="form-control" rows="3" required placeholder="Escribe el planteamiento del ejercicio..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="qe-svg">Código SVG Opcional (para diagramas, figuras o gráficas)</label>
+            <textarea id="qe-svg" class="form-control code-input" rows="3" placeholder='<svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">...</svg>'></textarea>
+            <div id="qe-svg-preview" class="svg-live-preview hidden"></div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="qe-opt-0">Opción A <span class="required">*</span></label>
+              <input type="text" id="qe-opt-0" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="qe-opt-1">Opción B <span class="required">*</span></label>
+              <input type="text" id="qe-opt-1" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="qe-opt-2">Opción C <span class="required">*</span></label>
+              <input type="text" id="qe-opt-2" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="qe-opt-3">Opción D <span class="required">*</span></label>
+              <input type="text" id="qe-opt-3" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="qe-correct">Respuesta Correcta <span class="required">*</span></label>
+              <select id="qe-correct" class="form-control" required>
+                <option value="0">Opción A</option>
+                <option value="1">Opción B</option>
+                <option value="2">Opción C</option>
+                <option value="3">Opción D</option>
+              </select>
+            </div>
+            <div class="form-group" id="qe-origin-topic-group" style="display:none;">
+              <label for="qe-origin-topic">Tema asociado (Desafío Final)</label>
+              <select id="qe-origin-topic" class="form-control"></select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="qe-explanation">Explicación Paso a Paso <span class="required">*</span></label>
+            <textarea id="qe-explanation" class="form-control" rows="3" required placeholder="Explica el procedimiento para llegar a la respuesta correcta..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal="modal-question-editor">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Pregunta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts de la aplicación -->
+  <script src="./questions.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

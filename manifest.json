@@ -1,0 +1,27 @@
+{
+  "name": "Profe Fernando PRE-U — Simulador Universitario",
+  "short_name": "Profe Fernando PRE-U",
+  "description": "Plataforma oficial de preparación, simulacros y certificación preuniversitaria en Matemáticas, Lógica y Razonamiento Abstracto.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F2942",
+  "theme_color": "#0F2942",
+  "lang": "es",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230F2942'/%3E%3Crect x='10' y='10' width='172' height='172' rx='28' fill='none' stroke='%23B48327' stroke-width='6'/%3E%3Cpolygon points='96,42 158,70 96,98 34,70' fill='%23FFFFFF'/%3E%3Cpath d='M57,84 L57,112 C57,124 135,124 135,112 L135,84 L96,102 Z' fill='%23B48327'/%3E%3Ctext x='96' y='158' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='24' fill='%23FFFFFF'%3EPRE-U%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230F2942'/%3E%3Crect x='24' y='24' width='464' height='464' rx='76' fill='none' stroke='%23B48327' stroke-width='14'/%3E%3Cpolygon points='256,110 420,185 256,260 92,185' fill='%23FFFFFF'/%3E%3Cpath d='M152,222 L152,300 C152,332 360,332 360,300 L360,222 L256,270 Z' fill='%23B48327'/%3E%3Cline x1='404' y1='192' x2='404' y2='305' stroke='%23B48327' stroke-width='12' stroke-linecap='round'/%3E%3Ccircle cx='404' cy='312' r='12' fill='%23FFFFFF'/%3E%3Ctext x='256' y='425' text-anchor='middle' font-family='Georgia,serif' font-weight='bold' font-size='64' fill='%23FFFFFF'%3EPRE-U%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
